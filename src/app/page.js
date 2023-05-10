@@ -1,9 +1,28 @@
 "use client";
 
+import ContactForm from "@/components/ContactForm";
+
 export default function Home() {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    let formData = new FormData(contactForm);
+
+    fetch("/", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams(formData).toString(),
+    })
+      .then((res) => {
+        console.log(res, "SUCCESS");
+      })
+      .catch((error) => {
+        console.log(error, "error");
+      });
+  };
   return (
-    <main className="flex items-center justify-center bg-black min-h-screen">
-      <form name="contact" method="POST" data-netlify="true">
+    <main className="flex items-center justify-center min-h-screen" style={{ background: 'coral' }}>
+      <ContactForm />
+      {/* <form name="contact" method="POST" data-netlify="true">
         <div className="mb-6">
           <label
             htmlFor="name"
@@ -42,6 +61,38 @@ export default function Home() {
           Submit
         </button>
       </form>
+
+      <br />
+      <br />
+      <br />
+
+      <form
+        id="contact-form"
+        name="contact"
+        method="POST"
+        data-netlify="true"
+        netlify-honeypot="bot-field"
+        action="/"
+      >
+        <p className="hidden">
+          <label>
+            Don’t fill this out if you’re human: <input name="bot-field" />
+          </label>
+        </p>
+        <p>
+          <label>
+            Email: <input type="text" name="email" />
+          </label>
+        </p>
+        <p>
+          <label>
+            Message: <textarea name="message"></textarea>
+          </label>
+        </p>
+        <p>
+          <button type="submit">Send</button>
+        </p>
+      </form> */}
     </main>
   );
 }
